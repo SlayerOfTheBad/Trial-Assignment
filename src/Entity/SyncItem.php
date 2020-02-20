@@ -34,21 +34,22 @@ class SyncItem
     private $grade;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\SyncData", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $currentData;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\SyncData", mappedBy="syncItem")
      */
     private $historyData;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SyncBag", inversedBy="syncItems")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $syncBagRelation;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\SyncData", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $current_data;
+
 
     public function __construct()
     {
@@ -96,17 +97,7 @@ class SyncItem
         return $this;
     }
 
-    public function getCurrentData(): ?SyncData
-    {
-        return $this->currentData;
-    }
 
-    public function setCurrentData(SyncData $currentData): self
-    {
-        $this->currentData = $currentData;
-
-        return $this;
-    }
 
     /**
      * @return Collection|SyncData[]
@@ -150,4 +141,17 @@ class SyncItem
 
         return $this;
     }
+
+    public function getCurrentData(): ?SyncData
+    {
+        return $this->current_data;
+    }
+
+    public function setCurrentData(SyncData $current_data): self
+    {
+        $this->current_data = $current_data;
+
+        return $this;
+    }
+
 }
