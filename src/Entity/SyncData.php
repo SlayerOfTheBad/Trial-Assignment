@@ -190,4 +190,96 @@ class SyncData
 
         return $this;
     }
+
+    public function gradeData(int $dataToGrade){
+
+        switch($dataToGrade){
+            case(0):
+                if($this->getDataString0() == null || $this->getDataString0() == "") {
+                    //If the data is missing, give the dataString an F grade.
+                    $grade = 'F';
+                }elseif(preg_match("/^(http:\/\/|https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/", $this->getDataString0()) == 0){
+                    //RegEx match for URLs found on https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+                    //If there is data but it's not a URL, give the dataString a D grade
+                    $grade = 'D';
+                }else{
+                    //If the data is a URL, give the dataString an A grade
+                    $grade = 'A';
+                }
+                break;
+            case(1):
+                if($this->getDataString1() == null || $this->getDataString1() == ""){
+                    //If the data is missing, give the dataString an F grade.
+                    $grade = 'F';
+                }elseif (strtotime($this->getDataString1()) == false){
+                    //If the data is not time-interpretable, give the dataString a C grade.
+                    $grade = 'C';
+                }else{
+                    //If the data is time-interpretable, give the dataString an A grade.
+                    $grade = 'A';
+                }
+                break;
+            case(2):
+                if($this->getDataString2() == null || $this->getDataString2() == "") {
+                    //If the data is missing, give the dataString a B grade.
+                    $grade = 'B';
+                }elseif(preg_match("/.*/", $this->getDataString2()) == 0){
+                    //If the data is not a string of printable characters, give the data a B grade.
+                    $grade = 'B';
+                }else{
+                    //If the data is a string of printable characters, give the data a A grade.
+                    $grade = 'A';
+                }
+                break;
+            case(3):
+                if($this->getDataString3() == null || $this->getDataString3() == "") {
+                    //If the data is missing, give the dataString an F grade.
+                    $grade = 'F';
+                }elseif(preg_match("/[0-9]\s*[0-9]\s*[0-9]\s*[0-9]\s*[a-zA-Z]\s*[a-zA-Z]\s*/", $this->getDataString3()) == 0){
+                    //If the data is not a postal code, give the dataString a D grade.
+                    $grade = 'D';
+                }else{
+                    //If the data is a postal code, give the dataString an A grade.
+                    $grade = 'A';
+                }
+                break;
+            case(4):
+                if($this->getDataString4() == null || $this->getDataString4() == "") {
+                    //If the data is missing, give the dataString a B grade.
+                    $grade = 'B';
+                }elseif(preg_match("/.{5,40}/", $this->getDataString4()) == 0){
+                    //If the data is not a string between 5-40 printable characters, give the data a B grade.
+                    $grade = 'B';
+                }else{
+                    //If the data is a string between 5-40 printable characters, give the data a A grade.
+                    $grade = 'A';
+                }
+                break;
+            case(5):
+                if($this->getDataString5() == null || $this->getDataString5() == "") {
+                    //If the data is missing, give the dataString a B grade.
+                    $grade = 'B';
+                }elseif(preg_match("/^[0-9]+\.?0*$/", $this->getDataString5()) == 0){
+                    //If the data is not an integer or a float, give the dataString a B grade.
+                    $grade = 'B';
+                }else{
+                    //If the data is an integer or float, give the dataString an A grade.
+                    $grade = 'A';
+                }
+                break;
+
+        }
+
+        return $grade;
+    }
+
+    public function getOverallGrade(){
+        $grade[0] = $this->gradeData(0);
+        $grade[1] = $this->gradeData(1);
+        $grade[2] = $this->gradeData(2);
+        $grade[3] = $this->gradeData(3);
+        $grade[4] = $this->gradeData(4);
+        $grade[5] = $this->gradeData(5);
+        return max($grade);
+    }
 }

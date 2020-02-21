@@ -77,9 +77,9 @@ class MainController extends AbstractController
             $item = new SyncItem();
             $uuid = Uuid::uuid4();
             $item->setItemID($uuid->toString());
-            $item->setGrade("A"); //Placeholder value, will implement grading system later
-            $item->setSyncBag("Unidentified");
             $item->setCurrentData($data);
+            $item->setGrade();
+            $item->setSyncBag("Unidentified");
 
             //Persist the item and push into the database
             $em->persist($item);

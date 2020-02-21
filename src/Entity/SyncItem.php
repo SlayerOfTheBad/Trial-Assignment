@@ -90,9 +90,9 @@ class SyncItem
         return $this->grade;
     }
 
-    public function setGrade(string $grade): self
+    public function setGrade(): self
     {
-        $this->grade = $grade;
+        $this->grade = $this->getCurrentData()->getOverallGrade();
 
         return $this;
     }
