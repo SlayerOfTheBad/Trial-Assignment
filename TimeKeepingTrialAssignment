@@ -1,6 +1,7 @@
-20  minutes - Reading and understanding assignment
-55  minutes - Setting up symfony project ad github repository
-2   hours   - Trying to set up X protocol MySQL on vagrant box, broke vagrant box. Gave up, decided to use relations instead.
-45  minutes - Setting up entities and relations
-1.5 hours   - Setting up basic form for entering data into a new object
-1   hour    - Debugging the relational data structure
+20   minutes - Reading and understanding assignment
+55   minutes - Setting up symfony project ad github repository
+2    hours   - Trying to set up X protocol MySQL on vagrant box, broke vagrant box. Gave up, decided to use relations instead.
+45   minutes - Setting up entities and relations
+1.5  hours   - Setting up basic form for entering data into a new object
+1    hour    - Debugging the relational data structure
+1.25 hours   - Implementing grading system
