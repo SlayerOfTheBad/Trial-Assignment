@@ -62,7 +62,7 @@ class SyncData
     private $dataString5;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SyncItem", inversedBy="historyData")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SyncItem", inversedBy="historyData", cascade={"persist"})
      */
     private $syncItem;
 
@@ -237,7 +237,7 @@ class SyncData
                     return 'F';
                 }elseif(preg_match("/[0-9]\s*[0-9]\s*[0-9]\s*[0-9]\s*[a-zA-Z]\s*[a-zA-Z]\s*/", $this->getDataString3()) == 0){
                     //If the data is not a postal code, give the dataString a D grade.
-                    return 'D';
+                    return 'C';
                 }else{
                     //If the data is a postal code, give the dataString an A grade.
                     return 'A';
@@ -276,6 +276,10 @@ class SyncData
         //Grade all data items individually
         for($i = 0; $i < 6; $i++){
             $grade[$i] = $this->gradeData($i);
+        }
+        //If the grade is 'F', mark the data as useless
+        if(max($grade) == 'F'){
+            $this->setStatus(-1);
         }
 
         //Return the 'maximum' grade, as per the ascii table, A < F, thus returns lowest overall grade.
